@@ -31,7 +31,7 @@ use yii\bootstrap5\ActiveForm;
     <?= $form->field($model, 'agree')->checkbox() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
