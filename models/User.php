@@ -22,6 +22,12 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+
+    /**
+     * @var mixed|null
+     */
+    private $authKey;
+
     /**
      * {@inheritdoc}
      */
@@ -70,15 +76,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(AllOrder::class, ['user_id' => 'id_user']);
     }
-    
-    
-    
+
+
     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return static::findOne($id);
     }
 
     /**
@@ -86,31 +91,25 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return static::findOne(['access_token' => $token]);
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getId()
     {
-        return $this->id;
+        return $this->id_user;
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function getAuthKey()
     {
         return $this->authKey;
-    }    
-    
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -118,7 +117,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->authKey === $authKey;
     }
-    
+
     /**
      * Validates password
      *
@@ -129,7 +128,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->password === $password;
     }
-    
+
     /**
      * Finds user by login
      *
@@ -138,18 +137,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findByLogin($login)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['login'], $login) === 0) {
-                return new static($user);
-            }
-        }
+        return static::findOne(['login' => $login]);
+    }
 
-        return null;
-    }   
-    
-    
-    
-    
     
     /**
      * Gets query for [[Carts]].
