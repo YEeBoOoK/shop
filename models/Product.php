@@ -14,6 +14,7 @@ use Yii;
  * @property string $country_of_origin
  * @property int $category_id
  * @property string $color
+ * @property string $description
  * @property int $left_product
  *
  * @property AllOrder[] $allOrders
@@ -36,10 +37,12 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['image', 'name', 'price', 'country_of_origin', 'category_id', 'color', 'left_product'], 'required'],
+            [['image', 'name', 'price', 'country_of_origin', 'category_id', 'color', 'description', 'left_product'], 'required'],
             [['price', 'category_id', 'left_product'], 'integer'],
-            [['image', 'country_of_origin'], 'string', 'max' => 200],
+            [['image'], 'file', 'extensions' => ['png','jpg','gif'], 'skipOnEmpty'=>false],
+            [['country_of_origin'], 'string', 'max' => 200],
             [['name', 'color'], 'string', 'max' => 100],
+            [['description'], 'string', 'max' => 500],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id_category']],
         ];
     }
@@ -51,13 +54,14 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id_product' => 'Id Product',
-            'image' => 'Image',
-            'name' => 'Name',
-            'price' => 'Price',
-            'country_of_origin' => 'Country Of Origin',
-            'category_id' => 'Category ID',
-            'color' => 'Color',
-            'left_product' => 'Left Product',
+            'image' => 'Изображение',
+            'name' => 'Наименование',
+            'price' => 'Цена',
+            'country_of_origin' => 'Страна',
+            'category_id' => 'Категория',
+            'color' => 'Цвет',
+            'description' => 'Описание',
+            'left_product' => 'Остаток',
         ];
     }
 

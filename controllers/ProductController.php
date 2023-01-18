@@ -2,17 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\AllOrder;
-use app\models\AllOrderSearch;
-use Yii;
+use app\models\Product;
+use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
- * AllOrderController implements the CRUD actions for AllOrder model.
+ * ProductController implements the CRUD actions for Product model.
  */
-class AllOrderController extends Controller
+class ProductController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +33,13 @@ class AllOrderController extends Controller
     }
 
     /**
-     * Lists all AllOrder models.
+     * Lists all Product models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new AllOrderSearch();
+        $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,30 +49,35 @@ class AllOrderController extends Controller
     }
 
     /**
-     * Displays a single AllOrder model.
-     * @param int $id_order Id Order
+     * Displays a single Product model.
+     * @param int $id_product Id Product
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_order)
+    public function actionView($id_product)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id_order),
+            'model' => $this->findModel($id_product),
         ]);
     }
 
     /**
-     * Creates a new AllOrder model.
+     * Creates a new Product model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new AllOrder();
+        $model = new Product();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_order' => $model->id_order]);
+            $model->load($this->request->post());
+            $model->image=UploadedFile::getInstance($model,'image');
+            $file_name='/web/ProductImage/' . \Yii::$app->getSecurity()->generateRandomString(50). '.' . $model->image->extension;
+            $model->image->saveAs(\Yii::$app->basePath . $file_name);
+            $model->image=$file_name;
+            if ($model->save(false)){
+            return $this->redirect(['view', 'id_product' => $model->id_product]);
             }
         } else {
             $model->loadDefaultValues();
@@ -84,18 +89,18 @@ class AllOrderController extends Controller
     }
 
     /**
-     * Updates an existing AllOrder model.
+     * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id_order Id Order
+     * @param int $id_product Id Product
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id_order)
+    public function actionUpdate($id_product)
     {
-        $model = $this->findModel($id_order);
+        $model = $this->findModel($id_product);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_order' => $model->id_order]);
+            return $this->redirect(['view', 'id_product' => $model->id_product]);
         }
 
         return $this->render('update', [
@@ -104,40 +109,43 @@ class AllOrderController extends Controller
     }
 
     /**
-     * Deletes an existing AllOrder model.
+     * Deletes an existing Product model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id_order Id Order
+     * @param int $id_product Id Product
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id_order)
+    public function actionDelete($id_product)
     {
-        $this->findModel($id_order)->delete();
+        $this->findModel($id_product)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the AllOrder model based on its primary key value.
+     * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id_order Id Order
-     * @return AllOrder the loaded model
+     * @param int $id_product Id Product
+     * @return Product the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id_order)
+    protected function findModel($id_product)
     {
-        if (($model = AllOrder::findOne(['id_order' => $id_order])) !== null) {
+        if (($model = Product::findOne(['id_product' => $id_product])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function beforeAction($action)
+    public function actionCatalog()
     {
-        if (Yii::$app->user->isGuest){
-            $this->redirect(['site/login']);
-            return false;
-        } else return true;
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('catalog', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

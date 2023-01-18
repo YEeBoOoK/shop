@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Cart;
 use app\models\CartSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -130,5 +131,13 @@ class CartController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function beforeAction($action)
+    {
+        if (Yii::$app->user->isGuest){
+            $this->redirect(['site/login']);
+            return false;
+        } else return true;
     }
 }
