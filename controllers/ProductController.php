@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Product;
 use app\models\ProductSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -99,10 +100,16 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id_product);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $model->image = UploadedFile::getInstance($model, 'image');
+            $file='web/ProductImage/' . \Yii::$app->getSecurity()->generateRandomString(50). '.' . $model->image->extension;
+            $model->image->saveAs($file);
+            $model->image='/'.$file;
+            $model->save(false);
             return $this->redirect(['view', 'id_product' => $model->id_product]);
         }
-
+        // && $model->save()
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -148,4 +155,5 @@ class ProductController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
 }

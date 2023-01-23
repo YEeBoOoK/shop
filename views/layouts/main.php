@@ -33,9 +33,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?php
     if(Yii::$app->user->isGuest){
         $items = [
-            ['label' => 'Каталог', 'url' => ['/product/index']],
+            ['label' => 'Каталог', 'url' => ['/product/catalog?sort=-id_product']],
             ['label' => 'О нас', 'url' => ['/site/about']],
-            ['label' => 'Контакты', 'url' => ['/site/contact']],
+            ['label' => 'Где нас найти?', 'url' => ['/site/contact']],
             ['label' => 'Регистрация', 'url' => ['/user/create']],
             ['label' => 'Авторизация', 'url' => ['/site/login']],
             ];}
@@ -46,9 +46,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ])
             :
         ($items=[
-        ['label' => 'Каталог', 'url' => ['/product/index']],
+        ['label' => 'Каталог', 'url' => ['/product/catalog?sort=-id_product']],
             ['label' => 'О нас', 'url' => ['/site/about']],
-            ['label' => 'Контакты', 'url' => ['/site/contact']],
+            ['label' => 'Где нас найти?', 'url' => ['/site/contact']],
             ['label' => 'Корзина', 'url' => ['/cart/index']],
             ['label' => 'Заказы', 'url' => ['/all-order/index']],
             ]);
@@ -87,13 +87,34 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
+<footer id="footer" class="mt-auto py-3" style="background-color: #2a5674;">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+            <div class="col text-center text-light">&copy; Мир цветов, <?= date('Y') ?></div>
         </div>
     </div>
+
+
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bskeyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" ariahidden="true">
+        <div class="modal-dialog">
+            22
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                    <button type="button" class="btn-close" data-bsdismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="/js/app.js"></script>
+
 </footer>
 
 <?php $this->endBody() ?>

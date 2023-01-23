@@ -12,7 +12,49 @@ use yii\grid\GridView;
 
 $this->title = 'Каталог товаров';
 $this->params['breadcrumbs'][] = $this->title;
-echo "<h1>Каталог товаров</h1>
+echo "<h1 style='color: #2a5674'>Каталог товаров</h1>
+
+<div class='btn-group'>
+  <button type='button' class='btn dropdown-toggle mb-2 text-light' style='background-color: #4f90a6' data-bs-toggle='dropdown' data-bs-auto-close='true' aria-expanded='false'>
+    Страна поставщик
+  </button>
+  <ul class='dropdown-menu'>
+    <li><a class='dropdown-item' href='/product/catalog/?sort=country_of_origin'>По алфавиту (А-Я)</a></li>
+    <li><a class='dropdown-item' href='/product/catalog/?sort=-country_of_origin'>По убыванию (Я-А)</a></li>
+  </ul>
+</div>
+
+<div class='btn-group'>  
+  <button type='button' class='btn dropdown-toggle mb-2 text-light' style='background-color: #4f90a6' data-bs-toggle='dropdown' aria-expanded='false'>
+    Наименование
+  </button>
+  <ul class='dropdown-menu'>
+    <li><a class='dropdown-item' href='/product/catalog/?sort=name'>По алфавиту (А-Я)</a></li>
+    <li><a class='dropdown-item' href='/product/catalog/?sort=-name'>От Я до А</a></li>
+  </ul>
+</div>
+
+<div class='btn-group'>
+  <button type='button' class='btn dropdown-toggle mb-2 text-light' style='background-color: #4f90a6' data-bs-toggle='dropdown' aria-expanded='false'>
+    Цена
+  </button>
+  <ul class='dropdown-menu'>
+    <li><a class='dropdown-item' href='/product/catalog/?sort=price'>По возрастанию</a></li>
+    <li><a class='dropdown-item' href='/product/catalog/?sort=-price'>По убыванию</a></li>
+  </ul>
+</div>
+
+<div class='btn-group'>
+  <button type='button' class='btn dropdown-toggle mb-2 text-light' style='background-color: #4f90a6' data-bs-toggle='dropdown' aria-expanded='false'>
+    Категория
+  </button>
+  <ul class='dropdown-menu'>
+    <li><a class='dropdown-item' href='/product/catalog?sort=-id_product'>Все</a></li>
+    <li><a class='dropdown-item' href='/product/catalog/?ProductSearch[category_id]=1'>Цветы</a></li>
+    <li><a class='dropdown-item' href='/product/catalog/?ProductSearch[category_id]=2'>Упаковка</a></li>
+    <li><a class='dropdown-item' href='/product/catalog/?ProductSearch[category_id]=3'>Дополнительно</a></li>
+  </ul>
+</div>
 <!--Поместите здесь элементы управления каталогом в соответсвии с заданием-->
 ";
 
@@ -21,58 +63,25 @@ echo "<div class='d-flex flex-row flex-wrap justify-content-start'>";
 foreach ($products as $product){
     if ($product->left_product>0) {
         echo
-        "<div class='card-group'>
-    <div class='card m-1 flex-row flex-wrap' style='width: 22%; min-width: 300px; max-width: 22%;'>
-    <img src='{$product->image}' class='card-img-top' style='max-height: 300px;' alt='Flower photo'>
+        "<div class='card' style='min-width: 300px; max-width: 23%; margin: 0px 10px 10px 0px;'>
+    <a href='/product/view?id_product={$product->id_product}'><img src='{$product->image}' class='card-img-top mx-auto' style='height: 100%; min-width: 298px; min-height: 299px; overflow: hidden;' alt='Product photo'></a>
     <div class='card-body'>
       <h5 class='card-title'>{$product->name}</h5>
-      <p class='card-text'>{$product->description}</p>
+      <p class='card-text'>{$product->country_of_origin}</p>
       <p class='text-danger'>{$product->price} руб</p>
-    </div>
-    <div class='card-body text-center'>";
+    </div> 
+    <div class='card-body'>";
 
-        echo (Yii::$app->user->isGuest ?
-            "<a href='/product/view?id_product={$product->id_product}'class='btn btn-primary'>Просмотр товара</a>":
-            "<p onclick='add_product({$product->id_product})' class='btn btn-primary'>Добавить в корзину</p>");
+        echo
+        (Yii::$app->user->isGuest
+            ?
+            "<a href='/product/view?id_product={$product->id_product}'class='btn text-light' style='background-color: #3b738f'>Просмотр товара</a>"
+            :
+            "<p onclick='add_product({$product->id_product},1)' class='btn text-light' style='background-color: #3b738f'>Добавить в корзину</p>");
 echo "</div>
 </div>";}
 }
-echo "</div>
-</div>";
+echo "</div>";
 ?>
-
-<div class="product-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Добавить товар', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id_product',
-            'image',
-            'name',
-            'price',
-            'country_of_origin',
-            //'category_id',
-            //'color',
-            //'left_product',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Product $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id_product' => $model->id_product]);
-                }
-            ],
-        ],
-    ]); ?>
-
 
 </div>

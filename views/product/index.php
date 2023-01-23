@@ -30,13 +30,17 @@ echo "<h1>Каталог товаров</h1>"
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_product',
-            'image',
+            //'id_product',
+            //'image',
             'name',
             'price',
             'country_of_origin',
             //'category_id',
             //'color',
+            ['attribute'=>'Категория', 'value'=> function($data){return $data->getCategory()->One()->name_category;}],
+            'name',
+            ['attribute'=>'Фото', 'format'=>'html', 'value'=>function($data){return"<img src='{$data->image}' alt='photo' style='width: 70px;'>";}],
+
             'description',
             //'left_product',
             [

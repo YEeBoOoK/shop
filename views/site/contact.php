@@ -8,16 +8,48 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\captcha\Captcha;
 
-$this->title = 'Contact';
+$this->title = 'Где нас найти?';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
-    <h1 class="text-primary"><?= Html::encode($this->title) ?></h1>
+ <div class="site-contact">
+    <h1 style='color: #2a5674;'><?= Html::encode($this->title) ?></h1>
+     <h5 style='font-weight: normal; color: #2a5674;'>
+         Наш магазин располагается по адресу:
+         Коломяжский проспект, 24Б
+     </h5>
+     <div class="mb-4" style="max-height: 620px; min-width: 300px; width: 100%; overflow: hidden;">
+         <img src='/web/SiteImage/map.png' alt='map' style='width: 100%; background: no-repeat;'/>
+     </div>
 
+     <h4 class="text-center m-3" style='color: #2a5674;'>
+         Контактные данные
+     </h4>
+
+     <div class="container">
+         <div class="row">
+             <div class="col text-center">
+                 <h6 style='color: #2a5674;'>Адрес</h6>
+                 <p>Коломяжский проспект, 24Б</p>
+             </div>
+             <div class="col text-center">
+                 <h6 style='color: #2a5674;'>Номер телефона</h6>
+                 <p>+7 (911) 911-91-91</p>
+             </div>
+             <div class="col text-center">
+                 <h6 style='color: #2a5674;'>Email</h6>
+                 <p>flowersworld@gmail.com</p>
+             </div>
+         </div>
+     </div>
+
+ </div>
+
+
+<!--
     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
 
         <div class="alert alert-success">
-            Thank you for contacting us. We will respond to you as soon as possible.
+            Благодарим вас за то, что вы обратились к нам. Мы ответим вам как можно скорее.
         </div>
 
         <p>
@@ -34,8 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php else: ?>
 
         <p>
-            If you have business inquiries or other questions, please fill out the following form to contact us.
-            Thank you.
+            Если у вас есть деловые запросы или другие вопросы, пожалуйста, заполните следующую форму, чтобы связаться с нами.
+            Спасибо!
         </p>
 
         <div class="row">
@@ -56,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                        <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
 
                 <?php ActiveForm::end(); ?>
@@ -64,5 +96,5 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
 
-    <?php endif; ?>
-</div>
+    <?php endif; ?>-->
+

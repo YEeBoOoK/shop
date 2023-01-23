@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Cart;
 use app\models\CartSearch;
+use app\models\Product;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -68,19 +69,27 @@ class CartController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Cart();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_cart' => $model->id_cart]);
+        $product_id = Yii::$app->request->post('product_id');
+        $items=Yii::$app->request->post('count');
+        $product = Product::findOne($product_id);
+        if (!$product) return false;
+        if ($product->left_product > 0) {
+            $product->left_product -= $items;
+            $product->save(false);
+            $model = cart::find()->where(['user_id' => Yii::$app->user->identity->id_user])
+                ->andWhere(['product_id' => $product_id])->one();
+            if ($model) {
+                $model->count += $items;
+                $model->save();
+                return $product->left_product;
             }
-        } else {
-            $model->loadDefaultValues();
+            $model = new cart();
+            $model->user_id = Yii::$app->user->identity->id_user;
+            $model->product_id = $product->id_product;
+            $model->count = $items;
+            if ($model->save(false)) return $product->left_product;
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return 'false';
     }
 
     /**
@@ -133,11 +142,8 @@ class CartController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function beforeAction($action)
-    {
-        if (Yii::$app->user->isGuest){
-            $this->redirect(['site/login']);
-            return false;
-        } else return true;
+    public function beforeAction($action){
+        if ($action->id=='create') $this->enableCsrfValidation=false;
+        return parent::beforeAction($action);
     }
 }

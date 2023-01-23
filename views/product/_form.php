@@ -10,7 +10,15 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin();
+
+    $li=[]; $categories=\app\models\Category::find()->all();
+    foreach ($categories as $category)
+    {
+        $li[$category->id_category]=$category->name_category;
+    }
+
+    ?>
 
     <?= $form->field($model, 'image')->fileInput() ?>
 
@@ -20,7 +28,7 @@ use yii\bootstrap5\ActiveForm;
 
     <?= $form->field($model, 'country_of_origin')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'category_id')->textInput() ?>
+    <?= $form->field($model, 'category_id')->dropDownList($li) ?>
 
     <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
 

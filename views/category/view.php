@@ -4,20 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Cart $model */
+/** @var app\models\Category $model */
 
-$this->title = $model->id_cart;
-$this->params['breadcrumbs'][] = ['label' => 'Корзина', 'url' => ['index']];
+$this->title = $model->id_category;
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="cart-view">
+<div class="category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_cart' => $model->id_cart], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_cart' => $model->id_cart], [
+        <?= Html::a('Update', ['update', 'id_category' => $model->id_category], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id_category' => $model->id_category], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,10 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_cart',
-            'product_id',
-            'user_id',
-            'count',
+            'id_category',
+            'name_category',
         ],
     ]) ?>
 
