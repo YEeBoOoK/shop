@@ -31,7 +31,7 @@ use yii\bootstrap5\ActiveForm;
     <?= $form->field($model, 'agree')->checkbox() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn text-light', 'style' => 'background-color: #2a5674']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

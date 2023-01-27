@@ -12,12 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="container">
 
-            <div class="col">
-                <img class='m-auto' style='width: 20%' src='/web/SiteImage/logo.png' alt="logo"/>
+            <div class="col-3">
+                <img class='m-auto' style='width: 100%' src='/web/SiteImage/logo.png' alt="logo"/>
             </div>
-            <div class="col">
-                <h2 style='color: #2a5674'>Мир цветов</h2>
-                <br>
+            <div class="col-9 mt-4">
+                <!--<h2 style='color: #2a5674'>Мир цветов</h2>
+                <br>-->
                 <h4 style='color: #2a5674'>Наш дивиз</h4>
                 <p>Я ничего не понимаю в этой жизни, ПАМАГИТИ.</p>
                 <br>
@@ -34,12 +34,17 @@ $this->params['breadcrumbs'][] = $this->title;
         $items=[];
 
         foreach ($articles as $article){
-            $items[]="<div class='m-1 p-2 d-flex flex-column justify-content-center' style='background-color: #3b738f; max-height: 560px; min-height: 150px;'>
+            $items[]="<div class='m-1 p-2 d-flex flex-column justify-content-center' style='background-color: #3b738f; max-height: 600px; min-height: 250px; height: 100%; min-width: 250px; width: 100%;'>
     <h1 class='text-center text-light m-1'>{$article->name}</h1>
-    <img class='m-auto' style='height: auto; overflow: hidden' src='{$article->image}' alt='photo'/></div>";
+    <div class='d-flex flex-column justify-content-center' style='max-height: 600px; min-height: 250px; min-width: 250px; width: 100%; overflow: hidden;'>
+    <img class='m-auto' style='height:auto; min-width: 250px; max-width: 600px; width: 100%; background: no-repeat' src='{$article->image}' alt='photo'/></div>
+    </div>
+    ";
         }
         echo yii\bootstrap5\Carousel::widget(['items'=>$items]);
         ?>
+
+
 
     </code>
 </div>

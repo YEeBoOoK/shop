@@ -25,9 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_cart',
-            'product_id',
-            'user_id',
+            //'id_cart',
+            ['attribute'=>'Фото', 'format'=>'html', 'value'=>function($data){return"<img src='{$data->getProduct()->One()->image}' alt='photo' style='width: 100%; min-width: 150px; max-width: 250px;'>";}],
+            ['attribute'=>'Товар', 'value'=> function($data){return $data->getProduct()->One()->name;}],
+            ['attribute'=>'Описание', 'value'=> function($data){return $data->getProduct()->One()->description;}],
+            ['attribute'=>'Цена за единицу', 'value'=> function($data){return $data->getProduct()->One()->price.' руб.';}],
+            //'product_id',
+            //'user_id',
             'count',
             [
                 'class' => ActionColumn::className(),
@@ -38,5 +42,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+
+    <div class="form-group mt-3">
+        <a href="../all-order/create" class="btn btn-success">Оформить заказ</a>
+    </div>
 
 </div>

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\AllOrder;
 use app\models\AllOrderSearch;
+use app\models\Cart;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -68,7 +69,19 @@ class AllOrderController extends Controller
      */
     public function actionCreate()
     {
-        $model = new AllOrder();
+        $identity = Yii::$app->user->identity->id_user;
+        $carts = Cart::find()->where(['user_id'=> $identity])->all();
+        foreach ($carts as $cart){
+            $order = new AllOrder();
+            $order->user_id = $identity;
+            $order->product_id = $cart->product_id;
+            $order->count = $cart->count;
+            $order->save(false);
+            $cart->delete();
+        }
+        return $this->redirect(['all-order/index?AllOrderSearch[user_id]='.Yii::$app->user->identity->id_user]);
+    }
+        /*$model = new AllOrder();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -80,8 +93,8 @@ class AllOrderController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-        ]);
-    }
+        ]);*/
+
 
     /**
      * Updates an existing AllOrder model.

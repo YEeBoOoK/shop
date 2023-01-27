@@ -36,7 +36,7 @@ use yii\bootstrap5\ActiveForm;
 
     <?= $form->field($model, 'left_product')->textInput() ?>
 
-    <div class="form-group">
+    <div class="form-group mt-3">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 

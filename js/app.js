@@ -1,4 +1,4 @@
-function add_product(id, items){
+function add_product(id_product, items){
     let form=new FormData();
     form.append('product_id', id_product);
     form.append('count', items);

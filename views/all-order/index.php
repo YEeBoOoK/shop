@@ -10,16 +10,16 @@ use yii\grid\GridView;
 /** @var app\models\AllOrderSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'All Orders';
+$this->title = 'Заказы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="all-order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create All Order', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <!--<p>
+        < (тут ?=) Html::a('Оформить заказ', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>-->
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -29,12 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_order',
-            'user_id',
-            'product_id',
+            //'id_order',
+            ['attribute'=>'Фото', 'format'=>'html', 'value'=>function($data){return"<img src='{$data->getProduct()->One()->image}' alt='photo' style='width: 100%; min-width: 150px; max-width: 250px;'>";}],
+            ['attribute'=>'Наименование', 'value'=> function($data){return $data->getProduct()->One()->name;}],
+            //'product_id',
             'count',
+            'status',
             'reason',
-            //'status',
             //'time',
             [
                 'class' => ActionColumn::className(),

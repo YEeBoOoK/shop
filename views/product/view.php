@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Product;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,7 +8,7 @@ use yii\widgets\DetailView;
 /** @var app\models\Product $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['../product/catalog?sort=-id_product']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -35,7 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             //'id_product',
             //'image',
-            ['attribute'=>'Фото', 'format'=>'html', 'value'=>function($data){return"<img src='{$data->image}' alt='photo' style='width: 100%; min-width: 150px; max-width: 350px;'>";}],
+            ['attribute'=>'Фото', 'format'=>'html',
+                'value'=>function($data){return"<img src='{$data->image}' alt='photo' style='width: 100%; min-width: 150px; max-width: 350px;'>";}],
             'name',
             'price',
             'country_of_origin',
@@ -47,17 +49,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <p>
-        <?=
-        (Yii::$app->user->isGuest
-            ?
-            "<a href=''</a>"
+    <?php
+        echo(Yii::$app->user->isGuest ?
+            "<a href=''></a>"
             :
             "<p onclick='add_product({$model->id_product},1)' class='btn text-light w-100' style='background-color: #3b738f'>Добавить в корзину</p>");
         ?>
-    </p>
-
-
-
 
 </div>

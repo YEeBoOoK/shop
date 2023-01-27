@@ -77,13 +77,15 @@ class UserController extends Controller
 
         if (\Yii::$app->request->isAjax && $model->load(\Yii::$app->request->post())) {
         \Yii::$app->response->format = Response::FORMAT_JSON;
+
         return ActiveForm::validate($model);
     }
 
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_user' => $model->id_user]);
+                Yii::$app->user->login($model);
+                return $this->redirect(['site/about']);
             }
         } else {
             $model->loadDefaultValues();

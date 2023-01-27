@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -16,11 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id_cart' => $model->id_cart], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id_cart' => $model->id_cart], [
+        <?= Html::a('Редактировать', ['update', 'id_cart' => $model->id_cart], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id_cart' => $model->id_cart], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены, что хотите удалить данный элемент?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -31,9 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_cart',
             'product_id',
-            'user_id',
+             'user_id',
             'count',
         ],
     ]) ?>
+
+    
 
 </div>

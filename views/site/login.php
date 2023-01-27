@@ -6,12 +6,13 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
+use yii\bootstrap5;
 
 $this->title = 'Авторизация';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1 class="text-primary"><?= Html::encode($this->title) ?></h1>
+    <h1 style='color: #2a5674'><?= Html::encode($this->title) ?></h1>
 
     <p>Пожалуйста, заполните следующие поля для входа в систему</p>
 
@@ -20,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}\n{input}\n{error}",
-            'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-            'inputOptions' => ['class' => 'col-lg-3 form-control'],
+            'labelOptions' => ['class' => 'form-label'],
+            'inputOptions' => ['class' => ' mx-2 form-control w-75'],
             'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
         ],
     ]); ?>
@@ -31,20 +32,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'password')->passwordInput() ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"offset-lg-1 col-lg-3 custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
         ]) ?>
 
         <div class="form-group">
-            <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <div">
+                <?= Html::submitButton('Войти', ['class' => 'btn text-light', 'style' => 'background-color: #2a5674;', 'name' => 'login-button']) ?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
 
-  <!--  <div class="offset-lg-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the login/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
-    -->
 </div>

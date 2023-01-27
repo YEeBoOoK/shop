@@ -49,8 +49,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ['label' => 'Каталог', 'url' => ['/product/catalog?sort=-id_product']],
             ['label' => 'О нас', 'url' => ['/site/about']],
             ['label' => 'Где нас найти?', 'url' => ['/site/contact']],
-            ['label' => 'Корзина', 'url' => ['/cart/index']],
-            ['label' => 'Заказы', 'url' => ['/all-order/index']],
+            ['label' => 'Корзина', 'url' => ['/cart/index?CartSearch[user_id]=' . Yii::$app->user->identity->id_user]],
+            ['label' => 'Заказы', 'url' => ['/all-order/index?AllOrderSearch[user_id]=' . Yii::$app->user->identity->id_user]],
             ]);
 
         ($items[] = '<li class="nav-item">'

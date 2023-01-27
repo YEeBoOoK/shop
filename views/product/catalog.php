@@ -5,11 +5,18 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\bootstrap5;
+use yii\bootstrap5\Dropdown;
 
 /** @var yii\web\View $this */
 /** @var app\models\ProductSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+?>
 
+<?php
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ProductSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 $this->title = 'Каталог товаров';
 $this->params['breadcrumbs'][] = $this->title;
 echo "<h1 style='color: #2a5674'>Каталог товаров</h1>
@@ -73,8 +80,7 @@ foreach ($products as $product){
     <div class='card-body'>";
 
         echo
-        (Yii::$app->user->isGuest
-            ?
+        (Yii::$app->user->isGuest ?
             "<a href='/product/view?id_product={$product->id_product}'class='btn text-light' style='background-color: #3b738f'>Просмотр товара</a>"
             :
             "<p onclick='add_product({$product->id_product},1)' class='btn text-light' style='background-color: #3b738f'>Добавить в корзину</p>");
@@ -82,6 +88,5 @@ echo "</div>
 </div>";}
 }
 echo "</div>";
-?>
 
-</div>
+?>

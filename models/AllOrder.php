@@ -34,7 +34,7 @@ class AllOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'count', 'reason'], 'required'],
+            [['user_id', 'product_id', 'count'], 'required'],
             [['user_id', 'product_id', 'count'], 'integer'],
             [['status'], 'string'],
             [['time'], 'safe'],
@@ -50,13 +50,13 @@ class AllOrder extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_order' => 'Id Order',
-            'user_id' => 'User ID',
-            'product_id' => 'Product ID',
-            'count' => 'Count',
-            'reason' => 'Reason',
-            'status' => 'Status',
-            'time' => 'Time',
+            'id_order' => 'Id Заказа',
+            'user_id' => 'Id Пользователя',
+            'product_id' => 'Id Продукта',
+            'count' => 'Количество',
+            'reason' => 'Причина',
+            'status' => 'Статус',
+            'time' => 'Дата и время',
         ];
     }
 
